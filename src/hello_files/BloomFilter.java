@@ -11,19 +11,21 @@ public class BloomFilter {
 	private int m;
 	private int k;
 	private BitSet bloomfilter;
-	
+	/*
+	 * 
+	 * comments added in this file to check if these changes are shown on git hub*/
 	
 	public BloomFilter(long n, double p){
 		
 		this.n=n;
 		
-		falseprobability=p;
+		this.falseprobability=p;
 		
-		m= optimalM(n, p);
+		this.m= optimalM(n, p);
 		
-		k= optimalK(n, m);
+		this.k= optimalK(n, m);
 		
-		bloomfilter= new BitSet(m);
+		this.bloomfilter= new BitSet(m);
 		
 		
 		
@@ -100,7 +102,12 @@ public class BloomFilter {
 		// TODO Auto-generated method stub
 		return new BigInteger(hex,16);
 	}
-	
+	/**
+	 * checks whether an element is present in the bloom filter or not
+	 * @param str
+	 * @return boolean value.. true or false
+	 * @throws NoSuchAlgorithmException
+	 */
 	
 	
 	private boolean contains(String str) throws NoSuchAlgorithmException{
@@ -130,7 +137,7 @@ public class BloomFilter {
 		// TODO Auto-generated method stub
 		
 		
-		BloomFilter bf= new BloomFilter(100000, 0.01);
+		BloomFilter bf= new BloomFilter(1000000, 0.001);
 		
 		System.out.println("n="+bf.n);
 		System.out.println("p= "+bf.falseprobability);
@@ -140,24 +147,23 @@ public class BloomFilter {
 		
 	
 		
-		for(int i=0;i<100000;i++)
-			bf.add("element"+i);
+		for(int i=0;i<1000000;i++)
+			bf.add("this is tested for 30 keys"+i);
 		
 		
 		//checking the elements::
 		
-		for(int j=0;j<100000;j++)
-			if(!bf.contains("element"+j))
+		final long startTime = System.nanoTime();
+		
+		
+		for(int j=0;j<1000000;j++)
+			if(!bf.contains("this is tested for 30 keys"+j))
 				System.out.println("false");
 		
 		
-		final long startTime = System.nanoTime();
-
-		
-		System.out.println("if the bloom filter contains the element 455;; ans is true="+bf.contains("element455"));
 		final long duration = System.nanoTime() - startTime;
 		//long totalTime = endTime - startTime;
-		System.out.println("total time for get operation="+duration);
+		System.out.println("total time for get operation="+(duration/1000000));
 		
 		
 		
