@@ -11,9 +11,7 @@ public class BloomFilter {
 	private int m;
 	private int k;
 	private BitSet bloomfilter;
-	/*
-	 * 
-	 * comments added in this file to check if these changes are shown on git hub*/
+	
 	
 	public BloomFilter(long n, double p){
 		
