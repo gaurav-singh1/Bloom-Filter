@@ -141,7 +141,7 @@ public final class MurmurHash3 {
         // optimized ascii implementation (currently slower!!! code size?)
         if (shift == 24) {
           k1 = k1 | (code << 24);
-
+s
           k1 *= c1;
           k1 = (k1 << 15) | (k1 >>> 17);  // ROTL32(k1,15);
           k1 *= c2;

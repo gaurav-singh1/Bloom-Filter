@@ -1,5 +1,7 @@
 package hello_files;
 
+import hello_files.MurmurHash3;
+
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.BitSet;
@@ -42,7 +44,7 @@ public class BloomFilter {
 
 	public void add(String str) throws NoSuchAlgorithmException{
 		
-		
+		/*
 		String hex1= HashProvider.hash(str, "MD5");
 		
 		String hex2= HashProvider.hash(str,"SHA1");
@@ -62,8 +64,15 @@ public class BloomFilter {
 		/**
 		 * element added : bit set to true at position[k] in the BitSet bloomfilter
 		 */
+		
+		/*
 		for(int i=0;i<k;i++)
 			this.bloomfilter.set(position[i]);
+		*/
+		
+		int[] position=hashpositions(str);
+		
+		
 		
 		
 		
@@ -75,6 +84,24 @@ public class BloomFilter {
 	
 	
 	
+	private int[] hashpositions(String str) {
+		// TODO Auto-generated method stub
+		int[] hashposition=new int[k];
+		int hashcode;
+		int index;
+		MurmurHash3 hash=new MurmurHash3();
+		for(int i=1;i<=k;i++){
+			
+			hashcode=hash.murmurhash3_x86_32(str, 0, str.length(), i);
+			index= hashcode & m;
+			bloomfilter.set(index);
+			
+		}
+		
+		return hashposition;
+	}
+
+
 	private int[] caculatehashposition(BigInteger decicode1,
 			BigInteger decicode2, int k2) {
 		// TODO Auto-generated method stub
@@ -107,7 +134,7 @@ public class BloomFilter {
 	 * @throws NoSuchAlgorithmException
 	 */
 	
-	
+	/*
 	private boolean contains(String str) throws NoSuchAlgorithmException{
 		boolean result = true;
 		
@@ -129,7 +156,21 @@ public class BloomFilter {
 		return result;
 		
 	}
-
+*/
+	
+	private boolean contains(String str){
+		
+		int[] hashposition=hashpositions(str);
+		boolean result=true;
+		
+		for(int i=0;i<k;i++){
+			if(!bloomfilter.get(hashposition[i]))
+				return false;
+		}
+		
+		return result;
+		
+	}
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		// TODO Auto-generated method stub

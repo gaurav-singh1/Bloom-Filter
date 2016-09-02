@@ -51,12 +51,13 @@ public class HelloWorld {
 		 
 		 
 		 */
-		
+	
+		/*
 	int[] arr=update(1,2);
 	
 	for(int i=0;i<2;i++)
 		System.out.println(arr[i]);
-	
+	*/
 	
 		
 		

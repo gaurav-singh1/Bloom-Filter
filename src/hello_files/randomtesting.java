@@ -1,5 +1,7 @@
 package hello_files;
 
+import hello_files.MurmurHash3;
+
 import java.nio.ByteBuffer;
 
 public class randomtesting {
@@ -11,10 +13,11 @@ public class randomtesting {
 		 * this is the class made for testing the git hub from terminal only....
 		 */
 		
-		MurmurHash3 mh=new MurmurHash3();
+	MurmurHash3 mh=new MurmurHash3();
 		
-		String str="42";
-		int x=42;
+		String str="abcdef";
+		
+		
 		/*byte[] bytes=ByteBuffer.allocate(4).putInt(x).array();
 		System.out.println("bytes of 42="+bytes);
 		int hashcode=mh.murmurhash3_x86_32(bytes, 0, bytes.length, 0);
@@ -23,30 +26,41 @@ public class randomtesting {
 		
 		*/
 		
-		int key=hash32shift(x);
 		
-		System.out.println("hsh code for int 42="+key);
+		System.out.println(str.getBytes());
+		
+		int hashcode;
+		
+		System.out.println("Producing different hash codes using different seeds....");
+		for(int i=1;i<=10;i++){
+			hashcode=mh.murmurhash3_x86_32(str, 0, str.length() , i);
+			System.out.println(hashcode & 1035);
+		}
+		
+		
+		
+		/*
+		
+		
+		int x=12335;
+		
+		System.out.println(128 >>> 2);
+		
+		System.out.println("$$$$$$$$$$$$$$$$");
+		int z= 1838383 & 1838383;
+		
+		System.out.println(z);
+		
+		*/
+		System.out.println("$$$$$$$$$$$$$$$$");
+		System.out.println( 0x6ddd &  0x7fffffff);
+		
 	}
 	
 	
-	public static int hash32shift(int key)
-	{
-	  key = ~key + (key << 15); // key = (key << 15) - key - 1;
-	  key = key ^ (key >>> 12);
-	  key = key + (key << 2);
-	  key = key ^ (key >>> 4);
-	  key = key * 2057; // key = (key + (key << 3)) + (key << 11);
-	  key = key ^ (key >>> 16);
-	  return key;
-	}
-
-
-	public static int hash(int x) {
-	    x = ((x >>> 16) ^ x) * 0x45d9f3b;
-	    x = ((x >>> 16) ^ x) * 0x45d9f3b;
-	    x = (x >>> 16) ^ x;
-	    return x;
-	}
+	
+	
+	
 }
 
 

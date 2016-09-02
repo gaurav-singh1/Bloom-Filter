@@ -32,6 +32,8 @@ public class jsontest {
 		customdata.add(prabhakar);
 		customdata.add(jo);
 		
+		
+		
 		JSONArray aps1=new JSONArray();
 		JSONObject deviceid=new JSONObject();
 		deviceid.put("device","12345");
@@ -42,6 +44,13 @@ public class jsontest {
 		JSONObject payload=new JSONObject();
 		payload.put("aps", aps1);
 		payload.put("customdata",customdata);
+		
+		Object obj=payload;
+		
+		System.out.println("******after creating payload into object**********");
+		System.out.println(obj);
+		
+		System.out.println("***************************************************");
 		
 		System.out.println(payload);
 		
