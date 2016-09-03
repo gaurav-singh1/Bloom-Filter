@@ -3,6 +3,10 @@ package hello_files;
 import hello_files.MurmurHash3;
 
 import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.BitSet;
+import java.util.Random;
 
 public class randomtesting {
 
@@ -26,37 +30,27 @@ public class randomtesting {
 		
 		*/
 		
-		
-		System.out.println(str.getBytes());
-		
-		int hashcode;
-		
-		System.out.println("Producing different hash codes using different seeds....");
-		for(int i=1;i<=10;i++){
-			hashcode=mh.murmurhash3_x86_32(str, 0, str.length() , i);
-			System.out.println(hashcode & 1035);
-		}
-		
-		
-		
-		/*
-		
-		
-		int x=12335;
-		
-		System.out.println(128 >>> 2);
-		
-		System.out.println("$$$$$$$$$$$$$$$$");
-		int z= 1838383 & 1838383;
-		
-		System.out.println(z);
-		
-		*/
-		System.out.println("$$$$$$$$$$$$$$$$");
-		System.out.println( 0x6ddd &  0x7fffffff);
+	int num=129;
+	int m=128;
+	System.out.println(num & (m-1));
 		
 	}
 	
+	public static String toHexString(int decimal)
+	{
+	    String codes = "0123456789ABCDEF";
+
+	    StringBuilder builder = new StringBuilder(8);
+
+	    builder.setLength(8);
+
+	    for (int i = 7; i >= 0; i--) {
+	        builder.setCharAt(i, codes.charAt(decimal & 0xF));
+	        decimal >>= 4;
+	    }
+
+	    return builder.toString();
+	}
 	
 	
 	

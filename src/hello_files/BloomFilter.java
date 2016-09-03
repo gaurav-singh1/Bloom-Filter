@@ -73,7 +73,8 @@ public class BloomFilter {
 		int[] position=hashpositions(str);
 		
 		
-		
+		for(int i=0;i<k;i++)
+			bloomfilter.set(position[i]);
 		
 		
 		
@@ -93,8 +94,12 @@ public class BloomFilter {
 		for(int i=1;i<=k;i++){
 			
 			hashcode=hash.murmurhash3_x86_32(str, 0, str.length(), i);
-			index= hashcode & m;
-			bloomfilter.set(index);
+			if(hashcode<0)
+				hashcode=~hashcode;
+			
+			index= hashcode - (hashcode/m) * m;
+			
+			hashposition[i-1]=index;
 			
 		}
 		
@@ -160,11 +165,11 @@ public class BloomFilter {
 	
 	private boolean contains(String str){
 		
-		int[] hashposition=hashpositions(str);
+		int[] position=hashpositions(str);
 		boolean result=true;
 		
 		for(int i=0;i<k;i++){
-			if(!bloomfilter.get(hashposition[i]))
+			if(!bloomfilter.get(position[i]))
 				return false;
 		}
 		
@@ -176,7 +181,7 @@ public class BloomFilter {
 		// TODO Auto-generated method stub
 		
 		
-		BloomFilter bf= new BloomFilter(1000000, 0.001);
+		BloomFilter bf= new BloomFilter(3000000, 0.0001);
 		
 		System.out.println("n="+bf.n);
 		System.out.println("p= "+bf.falseprobability);
@@ -186,24 +191,20 @@ public class BloomFilter {
 		
 	
 		
-		for(int i=0;i<1000000;i++)
-			bf.add("this is tested for 30 keys"+i);
+		for(int i=0;i<3000000;i++){
+			//if(i%2==0)
+				bf.add("INCREASES LENGTH OF String TO TEST MAX LIMIT"+i);
+		}
 		
+		int counter=0;
+		final long starttime=System.nanoTime();
+		for(int j=0;j<3000000;j++)
+			if(!bf.contains("INCREASES LENGTH OF String TO TEST MAX LIMIT"+j))
+				counter++;
 		
-		//checking the elements::
+		final long duration=System.nanoTime()-starttime;
 		
-		final long startTime = System.nanoTime();
-		
-		
-		for(int j=0;j<1000000;j++)
-			if(!bf.contains("this is tested for 30 keys"+j))
-				System.out.println("false");
-		
-		
-		final long duration = System.nanoTime() - startTime;
-		//long totalTime = endTime - startTime;
-		System.out.println("total time for get operation="+(duration/1000000));
-		
+		System.out.println("duration of checking 3000000 elementis="+duration/3000000+"counter value="+counter);
 		
 		
 		
